@@ -225,20 +225,21 @@ void procsmpl::init_attrs()
 
     attr.type = PERF_TYPE_RAW;
 
-    // Set up load sampling
-    attr.type = PERF_TYPE_RAW;
-    attr.config = 0x5101cd;          // MEM_TRANS_RETIRED:LATENCY_THRESHOLD
-    attr.config1 = sample_latency_threshold;
-    attr.precise_ip = 2;
-    attr.disabled = 1;              // Event group leader starts disabled
-
-    attrs[0] = attr;
-
     // Set up store sampling
+    attr.type = PERF_TYPE_RAW;
     attr.config = 0x5382d0;         // MEM_UOPS_RETIRED:ALL_STORES
     attr.config1 = 0;
     attr.precise_ip = 2;
     attr.disabled = 0;              // Event group follower starts enabled
+
+    attrs[0] = attr;
+
+    // Set up load sampling
+    attr.config = 0x5101cd;          // MEM_TRANS_RETIRED:LATENCY_THRESHOLD
+    attr.config1 = sample_latency_threshold;
+    attr.precise_ip = 2;
+    attr.disabled = 1;              // Event group leader starts disabled
+    
 
     attrs[1] = attr;
 }
